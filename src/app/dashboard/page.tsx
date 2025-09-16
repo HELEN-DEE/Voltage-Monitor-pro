@@ -1,11 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { 
   Plus,
   X,
   Zap,
   TrendingUp,
-  TrendingDown,
   AlertTriangle,
   CheckCircle,
   Activity,
@@ -18,13 +17,11 @@ import {
   Microwave,
   WashingMachine,
   AirVent,
-  MoreHorizontal,
-  Power,
-  Clock,
-  Battery,
-  Gauge
+  Gauge,
+  Menu
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTheme } from '@/components/contexts/ThemeContext';
 
 interface Appliance {
   id: string;
@@ -39,7 +36,9 @@ interface Appliance {
 }
 
 const Dashboard = () => {
-  const [appliances, setAppliances] = useState<Appliance[]>([
+  const { isDarkMode } = useTheme();
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const [appliances, setAppliances] = React.useState<Appliance[]>([
     {
       id: '1',
       name: 'Smart TV',
@@ -86,12 +85,10 @@ const Dashboard = () => {
     }
   ]);
 
-  const [selectedAppliance, setSelectedAppliance] = useState<string | null>(null);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showAddModal, setShowAddModal] = React.useState(false);
 
   // Mock real-time voltage data
-  const [voltageData, setVoltageData] = useState([
+  const voltageData = [
     { time: '00:00', voltage: 240, power: 1200 },
     { time: '04:00', voltage: 238, power: 1180 },
     { time: '08:00', voltage: 245, power: 1450 },
@@ -99,21 +96,14 @@ const Dashboard = () => {
     { time: '16:00', voltage: 244, power: 1420 },
     { time: '20:00', voltage: 241, power: 1350 },
     { time: '24:00', voltage: 239, power: 1200 }
-  ]);
+  ];
 
-  const [currentData, setCurrentData] = useState([
+  const currentData = [
     { appliance: 'TV', current: 1.2 },
     { appliance: 'Fridge', current: 2.8 },
     { appliance: 'AC', current: 8.5 },
     { appliance: 'Washer', current: 5.2 }
-  ]);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDarkMode(true);
-    }
-  }, []);
+  ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -126,13 +116,19 @@ const Dashboard = () => {
   };
 
   const getStatusBg = (status: string) => {
+    // These colors will remain the same regardless of dark/light mode
     switch (status) {
-      case 'normal': return 'bg-green-100 dark:bg-green-900/20';
-      case 'warning': return 'bg-yellow-100 dark:bg-yellow-900/20';
-      case 'critical': return 'bg-red-100 dark:bg-red-900/20';
-      case 'offline': return 'bg-gray-100 dark:bg-gray-900/20';
-      default: return 'bg-gray-100 dark:bg-gray-900/20';
+      case 'normal': return 'bg-green-100 border-green-200';
+      case 'warning': return 'bg-yellow-100 border-yellow-200';
+      case 'critical': return 'bg-red-100 border-red-200';
+      case 'offline': return 'bg-gray-100 border-gray-200';
+      default: return 'bg-gray-100 border-gray-200';
     }
+  };
+
+  const getIconBg = () => {
+    // Consistent icon background regardless of theme
+    return 'bg-gray-100';
   };
 
   const totalPower = appliances.reduce((sum, appliance) => sum + appliance.power, 0);
@@ -164,19 +160,36 @@ const Dashboard = () => {
       {/* Main Layout */}
       <div className="flex">
         {/* Sidebar */}
-        <div className={`w-80 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r transition-colors duration-300 h-screen sticky top-0 overflow-y-auto`}>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                Smart Appliances
-              </h2>
+        <div className={`${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-50 w-80 ${
+          isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+        } border-r transition-all duration-300 h-screen overflow-y-auto`}>
+          
+          {/* Sidebar Header with Close Button */}
+          <div className="flex items-center justify-between p-4 lg:p-6 border-b border-gray-200 dark:border-gray-700 lg:border-b-0">
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Smart Appliances
+            </h2>
+            <div className="flex items-center space-x-2">
               <button
                 onClick={() => setShowAddModal(true)}
                 className="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
               >
                 <Plus className="h-4 w-4" />
               </button>
+              {/* Close button for mobile */}
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="lg:hidden flex items-center justify-center w-8 h-8 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
+          </div>
+
+          {/* Sidebar Content */}
+          <div className="p-4 lg:p-6 lg:pt-0">
 
             {/* Appliances List */}
             <div className="space-y-3">
@@ -186,35 +199,30 @@ const Dashboard = () => {
                   <div
                     key={appliance.id}
                     className={`p-4 rounded-xl border transition-all duration-200 hover:shadow-md ${
-                      isDarkMode 
-                        ? 'bg-gray-700 border-gray-600 hover:bg-gray-650' 
-                        : 'bg-gray-50 border-gray-200 hover:bg-white'
-                    } ${getStatusBg(appliance.status)}`}
+                      getStatusBg(appliance.status) // This now uses consistent colors
+                    }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3 flex-1">
-                        <div className={`p-2 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>
+                        <div className={`p-2 rounded-lg ${getIconBg()}`}>
                           <IconComponent className={`h-5 w-5 ${getStatusColor(appliance.status)}`} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                          <h3 className="font-medium text-sm text-gray-900">
                             {appliance.name}
                           </h3>
-                          <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <p className="text-xs text-gray-500">
                             {appliance.lastUpdate}
                           </p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <button
-                          onClick={() => setSelectedAppliance(appliance.id)}
-                          className={`p-1 rounded hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors`}
-                        >
+                        <button className="p-1 rounded hover:bg-blue-100 transition-colors">
                           <BarChart3 className="h-4 w-4 text-blue-500" />
                         </button>
                         <button
                           onClick={() => removeAppliance(appliance.id)}
-                          className={`p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors`}
+                          className="p-1 rounded hover:bg-red-100 transition-colors"
                         >
                           <X className="h-4 w-4 text-red-500" />
                         </button>
@@ -224,20 +232,20 @@ const Dashboard = () => {
                     {/* Appliance Stats */}
                     <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
                       <div>
-                        <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Voltage</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <span className="text-gray-500">Voltage</span>
+                        <div className="font-medium text-gray-900">
                           {appliance.voltage.toFixed(1)}V
                         </div>
                       </div>
                       <div>
-                        <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Current</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <span className="text-gray-500">Current</span>
+                        <div className="font-medium text-gray-900">
                           {appliance.current.toFixed(1)}A
                         </div>
                       </div>
                       <div>
-                        <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Power</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <span className="text-gray-500">Power</span>
+                        <div className="font-medium text-gray-900">
                           {appliance.power}W
                         </div>
                       </div>
@@ -249,10 +257,31 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Overlay for mobile */}
+        {isSidebarOpen && (
+          <div 
+            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
         {/* Main Content */}
-        <div className="flex-1 p-6">
-          {/* Header */}
-          <div className="mb-8">
+        <div className="flex-1 p-4 lg:p-6">
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden mb-4">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
+                isDarkMode ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-white hover:bg-gray-50 text-gray-900'
+              } border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+            >
+              <Menu className="h-5 w-5 mr-2" />
+              <span className="text-sm font-medium">Menu</span>
+            </button>
+          </div>
+          
+          {/* Header - Hidden on mobile since we have mobile header */}
+          <div className="hidden lg:block mb-8">
             <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Dashboard Overview
             </h1>
@@ -261,121 +290,129 @@ const Dashboard = () => {
             </p>
           </div>
 
+          {/* Mobile title */}
+          <div className="lg:hidden mb-6">
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+              Monitor your electrical systems in real-time
+            </p>
+          </div>
+
           {/* Overall Performance Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6 mb-6 lg:mb-8">
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <div className="min-w-0 flex-1">
+                  <p className={`text-xs lg:text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} truncate`}>
                     Total Power
                   </p>
-                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <p className={`text-lg lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {(totalPower / 1000).toFixed(2)} kW
                   </p>
                 </div>
-                <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-                  <Zap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <div className="p-2 lg:p-3 bg-blue-100 rounded-lg ml-2">
+                  <Zap className="h-4 w-4 lg:h-6 lg:w-6 text-blue-600" />
                 </div>
               </div>
             </div>
 
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <div className="min-w-0 flex-1">
+                  <p className={`text-xs lg:text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} truncate`}>
                     Avg Voltage
                   </p>
-                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <p className={`text-lg lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {avgVoltage.toFixed(1)} V
                   </p>
                 </div>
-                <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
-                  <Gauge className="h-6 w-6 text-green-600 dark:text-green-400" />
+                <div className="p-2 lg:p-3 bg-green-100 rounded-lg ml-2">
+                  <Gauge className="h-4 w-4 lg:h-6 lg:w-6 text-green-600" />
                 </div>
               </div>
             </div>
 
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <div className="min-w-0 flex-1">
+                  <p className={`text-xs lg:text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} truncate`}>
                     Total Current
                   </p>
-                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <p className={`text-lg lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {totalCurrent.toFixed(1)} A
                   </p>
                 </div>
-                <div className="p-3 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
-                  <Activity className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+                <div className="p-2 lg:p-3 bg-yellow-100 rounded-lg ml-2">
+                  <Activity className="h-4 w-4 lg:h-6 lg:w-6 text-yellow-600" />
                 </div>
               </div>
             </div>
 
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
               <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                <div className="min-w-0 flex-1">
+                  <p className={`text-xs lg:text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} truncate`}>
                     Efficiency
                   </p>
-                  <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  <p className={`text-lg lg:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {avgEfficiency.toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-                  <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                <div className="p-2 lg:p-3 bg-purple-100 rounded-lg ml-2">
+                  <TrendingUp className="h-4 w-4 lg:h-6 lg:w-6 text-purple-600" />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Status Overview */}
-          <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} mb-8`}>
-            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
+          <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} mb-6 lg:mb-8`}>
+            <h3 className={`text-base lg:text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
               System Status
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/10 rounded-lg">
-                <CheckCircle className="h-8 w-8 text-green-500" />
-                <div>
-                  <p className="font-medium text-green-700 dark:text-green-400">{normalCount} Normal</p>
-                  <p className="text-sm text-green-600 dark:text-green-500">Operating optimally</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-4">
+              <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                <CheckCircle className="h-6 w-6 lg:h-8 lg:w-8 text-green-500 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-medium text-green-700 text-sm lg:text-base">{normalCount} Normal</p>
+                  <p className="text-xs lg:text-sm text-green-600">Operating optimally</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/10 rounded-lg">
-                <AlertTriangle className="h-8 w-8 text-yellow-500" />
-                <div>
-                  <p className="font-medium text-yellow-700 dark:text-yellow-400">{warningCount} Warning</p>
-                  <p className="text-sm text-yellow-600 dark:text-yellow-500">Requires attention</p>
+              <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+                <AlertTriangle className="h-6 w-6 lg:h-8 lg:w-8 text-yellow-500 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-medium text-yellow-700 text-sm lg:text-base">{warningCount} Warning</p>
+                  <p className="text-xs lg:text-sm text-yellow-600">Requires attention</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-red-50 dark:bg-red-900/10 rounded-lg">
-                <X className="h-8 w-8 text-red-500" />
-                <div>
-                  <p className="font-medium text-red-700 dark:text-red-400">{criticalCount} Critical</p>
-                  <p className="text-sm text-red-600 dark:text-red-500">Immediate action needed</p>
+              <div className="flex items-center space-x-3 p-3 bg-red-50 rounded-lg">
+                <X className="h-6 w-6 lg:h-8 lg:w-8 text-red-500 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-medium text-red-700 text-sm lg:text-base">{criticalCount} Critical</p>
+                  <p className="text-xs lg:text-sm text-red-600">Immediate action needed</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Voltage Trend Chart */}
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+              <h3 className={`text-base lg:text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                 24-Hour Voltage Trend
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={250} className="lg:!h-[300px]">
                 <AreaChart data={voltageData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#f3f4f6'} />
-                  <XAxis dataKey="time" stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} />
-                  <YAxis stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+                  <XAxis dataKey="time" stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
+                  <YAxis stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
                   <Tooltip 
                     contentStyle={{
                       backgroundColor: isDarkMode ? '#1F2937' : '#FFFFFF',
                       border: `1px solid ${isDarkMode ? '#374151' : '#E5E7EB'}`,
                       borderRadius: '8px',
-                      color: isDarkMode ? '#FFFFFF' : '#000000'
+                      color: isDarkMode ? '#FFFFFF' : '#000000',
+                      fontSize: '12px'
                     }}
                   />
                   <Area 
@@ -396,21 +433,22 @@ const Dashboard = () => {
             </div>
 
             {/* Current Analysis Chart */}
-            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
+            <div className={`p-4 lg:p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+              <h3 className={`text-base lg:text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                 Current Draw by Appliance
               </h3>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={250} className="lg:!h-[300px]">
                 <BarChart data={currentData}>
                   <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#f3f4f6'} />
-                  <XAxis dataKey="appliance" stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} />
-                  <YAxis stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+                  <XAxis dataKey="appliance" stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
+                  <YAxis stroke={isDarkMode ? '#9CA3AF' : '#6B7280'} fontSize={12} />
                   <Tooltip 
                     contentStyle={{
                       backgroundColor: isDarkMode ? '#1F2937' : '#FFFFFF',
                       border: `1px solid ${isDarkMode ? '#374151' : '#E5E7EB'}`,
                       borderRadius: '8px',
-                      color: isDarkMode ? '#FFFFFF' : '#000000'
+                      color: isDarkMode ? '#FFFFFF' : '#000000',
+                      fontSize: '12px'
                     }}
                   />
                   <Bar dataKey="current" fill="#10B981" radius={[4, 4, 0, 0]} />
@@ -424,7 +462,7 @@ const Dashboard = () => {
       {/* Add Appliance Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 w-full max-w-md`}>
+          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto`}>
             <div className="flex items-center justify-between mb-6">
               <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 Add New Appliance
@@ -465,7 +503,7 @@ const Dashboard = () => {
                     }`}
                   >
                     <IconComponent className={`h-8 w-8 mx-auto mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'} text-center`}>
                       {item.name}
                     </p>
                   </button>

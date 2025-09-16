@@ -15,11 +15,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
       document.documentElement.classList.remove('dark');
     } else {
-      setIsDarkMode(true);
+      setIsDarkMode(false);
       document.documentElement.classList.add('dark');
     }
   }, []);
