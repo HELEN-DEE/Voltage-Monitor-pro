@@ -91,63 +91,63 @@ const { isDarkMode } = useTheme();
     }
   ];
 
-  return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode 
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-        : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50'
-    }`}>
-      {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute top-0 left-0 right-0 h-96 opacity-10">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
-          <div className="absolute top-0 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-20 w-72 h-72 bg-cyan-400 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center">
-            <div className="flex justify-center mb-8">
-              <div className={`flex items-center justify-center w-20 h-20 rounded-2xl shadow-2xl ${
-                isDarkMode 
-                    ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-                    : 'bg-gradient-to-br from-indigo-400 via-white to-blue-200'
-              }`}>
-                <Zap className="h-10 w-10 text-white" />
-              </div>
+    return (
+        <div className={`min-h-screen transition-colors duration-300 ${
+        isDarkMode 
+            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
+            : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50'
+        }`}>
+        {/* Hero Section */}
+        <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            {/* Background elements */}
+            <div className="absolute top-0 left-0 right-0 h-96 opacity-10">
+            <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-20 w-72 h-72 bg-cyan-400 rounded-full blur-3xl"></div>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                isDarkMode 
-                  ? 'from-blue-400 to-purple-400' 
-                  : 'from-blue-600 to-indigo-700'
-              }`}>
-                Voltage Monitor Pro
-              </span>
-            </h1>
+            <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center">
+                <div className="flex justify-center mb-8">
+                <div className={`flex items-center justify-center w-20 h-20 rounded-2xl shadow-2xl ${
+                    isDarkMode 
+                        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
+                        : 'bg-gradient-to-br from-indigo-400 via-indigo-100 to-blue-200'
+                }`}>
+                    <Zap className="h-10 w-10 text-white" />
+                </div>
+            </div>
             
-            <p className={`text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
-            }`}>
-              Advanced electrical monitoring system that tracks voltage fluctuations, protects your appliances, 
-              and provides comprehensive analytics for optimal electrical safety and efficiency.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg ${
-                isDarkMode 
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-400 hover:to-purple-500' 
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600'
-              }`}>
-                Start Monitoring Now
-              </button>
-              <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
-                isDarkMode 
-                  ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
-                  : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50'
-              }`}>
+                <h1 className="text-5xl md:text-7xl font-bold mb-6">
+                <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
+                    isDarkMode 
+                    ? 'from-blue-400 to-purple-400' 
+                    : 'from-blue-600 to-indigo-700'
+                }`}>
+                    Voltage Monitor Pro
+                </span>
+                </h1>
+                
+                <p className={`text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed ${
+                isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                Advanced electrical monitoring system that tracks voltage fluctuations, protects your appliances, 
+                and provides comprehensive analytics for optimal electrical safety and efficiency.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg ${
+                    isDarkMode 
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-400 hover:to-purple-500' 
+                    : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600'
+                }`}>
+                    Start Monitoring Now
+                </button>
+                <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
+                    isDarkMode 
+                    ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
+                    : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50'
+                }`}>
                 <Play className="h-5 w-5" />
                 View Live Demo
               </button>
