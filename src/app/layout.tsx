@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Voltage Monitor Pro",
-  description: "real time monitoring",
+  description: "Power managment system",
 };
 
 

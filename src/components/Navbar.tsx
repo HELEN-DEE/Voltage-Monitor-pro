@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { 
   Zap, 
   Menu, 
@@ -22,7 +22,7 @@ import { useTheme } from '@/components/contexts/ThemeContext'; // Import the hoo
 const Navbar = ({ isAuthenticated = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme(); // Use the theme context
-  const router = useRouter();
+  // const router = useRouter();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -35,7 +35,7 @@ const Navbar = ({ isAuthenticated = false }) => {
   const navigationLinks = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/voltage-monitor', label: 'Voltage Monitor', icon: Activity },
+    { href: '/voltageMonitor', label: 'Voltage Monitor', icon: Activity },
     { href: '/settings', label: 'Settings', icon: Settings },
   ];
 
@@ -65,9 +65,7 @@ const Navbar = ({ isAuthenticated = false }) => {
                   }`}>
                   Voltage Monitor <span className="text-amber-400">Pro</span>
                 </span>
-                {/* <span className="text-xs text-gray-300 font-medium">
-                  Power Management System
-                </span> */}
+                
               </div>
             </Link>
 
@@ -232,7 +230,7 @@ const Navbar = ({ isAuthenticated = false }) => {
                         : 'text-indigo-100 hover:text-white hover:bg-indigo-600'
                       }`}
                   >
-                    <LogIn className="h-5 w-5" />
+                    
                     <span>Sign In</span>
                   </Link>
                   <Link
