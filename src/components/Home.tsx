@@ -18,19 +18,6 @@ import {
 } from 'lucide-react';
 
 const Homepage = () => {
-//   const [isDarkMode, setIsDarkMode] = useState(true);
-
-//   // Initialize theme from localStorage
-//   useEffect(() => {
-//     const savedTheme = localStorage.getItem('theme');
-//     if (savedTheme === 'light') {
-//       setIsDarkMode(false);
-//       document.documentElement.classList.remove('dark');
-//     } else {
-//       setIsDarkMode(true);
-//       document.documentElement.classList.add('dark');
-//     }
-//   }, []);
 const { isDarkMode } = useTheme();
 
   const features = [
@@ -111,7 +98,7 @@ const { isDarkMode } = useTheme();
                 <div className="flex justify-center mb-8">
                 <div className={`flex items-center justify-center w-20 h-20 rounded-2xl shadow-2xl ${
                     isDarkMode 
-                        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
+                        ? 'bg-gradient-to-br from-blue-400 via-gray-800 to-purple-400  ' 
                         : 'bg-gradient-to-br from-indigo-400 via-indigo-100 to-blue-200'
                 }`}>
                     <Zap className="h-10 w-10 text-white" />

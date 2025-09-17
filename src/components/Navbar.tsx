@@ -52,8 +52,8 @@ const Navbar = ({ isAuthenticated = false }) => {
             <Link href="/" className="flex items-center space-x-3 group shrink-0">
               <div className={`flex items-center justify-center w-10 h-10 ${
                 isDarkMode 
-                  ? 'bg-gradient-to-br from-blue-500 to-purple-600' 
-                  : 'bg-gradient-to-br from-blue-600 to-indigo-700'
+                  ? 'bg-gradient-to-br from-blue-400 via-gray-800 to-purple-600' 
+                  : 'bg-gradient-to-br from-indigo-400 via-indigo-100 to-blue-200'
                 } rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300`}>
                 <Zap className="h-6 w-6 text-white" />
               </div>

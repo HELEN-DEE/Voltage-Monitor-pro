@@ -18,7 +18,8 @@ import {
   WashingMachine,
   AirVent,
   Gauge,
-  Menu
+  Menu,
+  ChevronLeft
 } from 'lucide-react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useTheme } from '@/components/contexts/ThemeContext';
@@ -37,7 +38,7 @@ interface Appliance {
 
 const Dashboard = () => {
   const { isDarkMode } = useTheme();
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
   const [appliances, setAppliances] = React.useState<Appliance[]>([
     {
       id: '1',
@@ -161,22 +162,29 @@ const Dashboard = () => {
       <div className="flex">
         {/* Sidebar */}
         <div className={`${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-50 w-80 ${
+          isSidebarOpen ? 'translate-x-0 w-80' : '-translate-x-full lg:translate-x-0 lg:w-20'
+        } fixed lg:relative inset-y-0 left-0 z-50 ${
           isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
         } border-r transition-all duration-300 h-screen overflow-y-auto`}>
           
           {/* Sidebar Header with Close Button */}
           <div className="flex items-center justify-between p-4 lg:p-6 border-b border-gray-200 dark:border-gray-700 lg:border-b-0">
-            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} ${!isSidebarOpen && 'lg:hidden'}`}>
               Smart Appliances
             </h2>
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setShowAddModal(true)}
-                className="flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                className={`flex items-center justify-center w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200 ${!isSidebarOpen && 'lg:hidden'}`}
               >
                 <Plus className="h-4 w-4" />
+              </button>
+              {/* Toggle sidebar button */}
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="hidden lg:flex items-center justify-center w-8 h-8 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors duration-200"
+              >
+                <ChevronLeft className={`h-4 w-4 transition-transform duration-300 ${!isSidebarOpen && 'rotate-180'}`} />
               </button>
               {/* Close button for mobile */}
               <button
@@ -189,7 +197,7 @@ const Dashboard = () => {
           </div>
 
           {/* Sidebar Content */}
-          <div className="p-4 lg:p-6 lg:pt-0">
+          <div className={`p-4 lg:p-6 lg:pt-0 ${!isSidebarOpen && 'lg:hidden'}`}>
 
             {/* Appliances List */}
             <div className="space-y-3">
@@ -255,6 +263,42 @@ const Dashboard = () => {
               })}
             </div>
           </div>
+
+          {/* Collapsed sidebar view */}
+          <div className={`hidden lg:block ${isSidebarOpen && 'lg:hidden'} p-4`}>
+            <div className="flex flex-col items-center space-y-4">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="flex items-center justify-center w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+              >
+                <Plus className="h-5 w-5" />
+              </button>
+              
+              {appliances.slice(0, 4).map((appliance) => {
+                const IconComponent = appliance.icon;
+                return (
+                  <div key={appliance.id} className="relative group">
+                    <div className={`p-2 rounded-lg ${getIconBg()}`}>
+                      <IconComponent className={`h-5 w-5 ${getStatusColor(appliance.status)}`} />
+                    </div>
+                    <div className="absolute left-12 top-1/2 -translate-y-1/2 z-50 hidden group-hover:block">
+                      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-md p-3 border border-gray-200 dark:border-gray-700 min-w-40">
+                        <h3 className="font-medium text-sm text-gray-900 dark:text-white">
+                          {appliance.name}
+                        </h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Status: <span className={getStatusColor(appliance.status)}>{appliance.status}</span>
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Power: {appliance.power}W
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Overlay for mobile */}
@@ -266,7 +310,7 @@ const Dashboard = () => {
         )}
 
         {/* Main Content */}
-        <div className="flex-1 p-4 lg:p-6">
+        <div className="flex-1 p-4 lg:p-6 transition-all duration-300">
           {/* Mobile Menu Button */}
           <div className="lg:hidden mb-4">
             <button
@@ -280,6 +324,21 @@ const Dashboard = () => {
             </button>
           </div>
           
+          {/* Desktop Toggle Button when sidebar is closed */}
+          {!isSidebarOpen && (
+            <div className="hidden lg:block mb-4">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
+                  isDarkMode ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-white hover:bg-gray-50 text-gray-900'
+                } border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+              >
+                <Menu className="h-5 w-5 mr-2" />
+                <span className="text-sm font-medium">Show Appliances</span>
+              </button>
+            </div>
+          )}
+          
           {/* Header - Hidden on mobile since we have mobile header */}
           <div className="hidden lg:block mb-8">
             <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -292,7 +351,10 @@ const Dashboard = () => {
 
           {/* Mobile title */}
           <div className="lg:hidden mb-6">
-            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
+            <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Dashboard Overview
+            </h1>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mt-1`}>
               Monitor your electrical systems in real-time
             </p>
           </div>
