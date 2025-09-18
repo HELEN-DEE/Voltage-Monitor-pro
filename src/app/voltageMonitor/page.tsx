@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { 
-  
   X,
   Zap,
   Power,
@@ -9,28 +8,24 @@ import {
   AlertTriangle,
   CheckCircle,
   Activity,
-  
   Tv,
   Refrigerator,
   Lightbulb,
-  
   Coffee,
-
   WashingMachine,
   AirVent,
   Gauge,
   TrendingUp,
-  
-  
   Battery,
-  
   Wifi,
   WifiOff,
   Menu,
   Eye,
-  
+  ChevronLeft
 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
+
 
 interface Appliance {
   id: string;
@@ -220,13 +215,19 @@ const VoltageMonitor = () => {
   };
 
   const getStatusBg = (status: string) => {
+    // Consistent colors regardless of theme
     switch (status) {
-      case 'normal': return 'bg-green-100 dark:bg-green-900/20';
-      case 'warning': return 'bg-yellow-100 dark:bg-yellow-900/20';
-      case 'critical': return 'bg-red-100 dark:bg-red-900/20';
-      case 'offline': return 'bg-gray-100 dark:bg-gray-900/20';
-      default: return 'bg-gray-100 dark:bg-gray-900/20';
+      case 'normal': return 'bg-green-100 border-green-200';
+      case 'warning': return 'bg-yellow-100 border-yellow-200';
+      case 'critical': return 'bg-red-100 border-red-200';
+      case 'offline': return 'bg-gray-100 border-gray-200';
+      default: return 'bg-gray-100 border-gray-200';
     }
+  };
+
+  const getIconBg = () => {
+    // Consistent icon background regardless of theme
+    return 'bg-gray-100';
   };
 
   const getTemperatureColor = (temp: number) => {
@@ -250,14 +251,14 @@ const VoltageMonitor = () => {
       <div className="flex">
         {/* Sidebar */}
         <div className={`${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-50 w-80 ${
+          isSidebarOpen ? 'translate-x-0 w-80' : '-translate-x-full lg:translate-x-0 lg:w-20'
+        } fixed lg:relative inset-y-0 left-0 z-50 ${
           isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
         } border-r transition-all duration-300 h-screen overflow-y-auto`}>
           
           {/* Sidebar Header */}
           <div className="flex items-center justify-between p-4 lg:p-6 border-b border-gray-200 dark:border-gray-700 lg:border-b-0">
-            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} ${!isSidebarOpen && 'lg:hidden'}`}>
               Voltage Monitor
             </h2>
             <div className="flex items-center space-x-2">
@@ -267,11 +268,19 @@ const VoltageMonitor = () => {
                   autoRefresh 
                     ? 'bg-green-500 hover:bg-green-600 text-white' 
                     : 'bg-gray-500 hover:bg-gray-600 text-white'
-                }`}
+                } ${!isSidebarOpen && 'lg:hidden'}`}
                 title={autoRefresh ? "Auto-refresh ON" : "Auto-refresh OFF"}
               >
                 <Activity className="h-4 w-4" />
               </button>
+              {/* Toggle sidebar button */}
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="hidden lg:flex items-center justify-center w-8 h-8 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-colors duration-200"
+              >
+                <ChevronLeft className={`h-4 w-4 transition-transform duration-300 ${!isSidebarOpen && 'rotate-180'}`} />
+              </button>
+              {/* Close button for mobile */}
               <button
                 onClick={() => setIsSidebarOpen(false)}
                 className="lg:hidden flex items-center justify-center w-8 h-8 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
@@ -281,8 +290,9 @@ const VoltageMonitor = () => {
             </div>
           </div>
 
-          {/* Control Panel */}
-          <div className="p-4 lg:p-6 lg:pt-4">
+          {/* Sidebar Content */}
+          <div className={`p-4 lg:p-6 lg:pt-0 ${!isSidebarOpen && 'lg:hidden'}`}>
+            {/* Control Panel */}
             <div className={`p-4 rounded-xl ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} mb-6`}>
               <h3 className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-3`}>
                 System Overview
@@ -323,16 +333,12 @@ const VoltageMonitor = () => {
                   <div
                     key={appliance.id}
                     className={`p-4 rounded-xl border transition-all duration-200 hover:shadow-md ${
-                      isDarkMode 
-                        ? 'bg-gray-700 border-gray-600 hover:bg-gray-650' 
-                        : 'bg-gray-50 border-gray-200 hover:bg-white'
-                    } ${getStatusBg(appliance.status)} ${
-                      selectedAppliance === appliance.id ? 'ring-2 ring-blue-500' : ''
-                    }`}
+                      getStatusBg(appliance.status)
+                    } ${selectedAppliance === appliance.id ? 'ring-2 ring-blue-500' : ''}`}
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center space-x-3 flex-1">
-                        <div className={`relative p-2 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>
+                        <div className={`relative p-2 rounded-lg ${getIconBg()}`}>
                           <IconComponent className={`h-5 w-5 ${getStatusColor(appliance.status)}`} />
                           {appliance.connectionStatus === 'connected' ? (
                             <Wifi className="absolute -top-1 -right-1 h-3 w-3 text-green-500" />
@@ -342,23 +348,23 @@ const VoltageMonitor = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2">
-                            <h3 className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                            <h3 className={`font-medium text-sm truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                               {appliance.name}
                             </h3>
-                            <div className={`flex items-center space-x-1 text-xs px-2 py-1 rounded-full ${
+                            <div className={`flex items-center space-x-1 text-xs px-2 py-1 rounded-full flex-shrink-0 ${
                               appliance.isOn 
-                                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-gray-100 text-gray-600'
                             }`}>
                               <Power className="h-3 w-3" />
                               <span>{appliance.isOn ? 'ON' : 'OFF'}</span>
                             </div>
                           </div>
                           <div className="flex items-center space-x-3 text-xs mt-1">
-                            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>
+                            <span className={`truncate ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                               {appliance.location}
                             </span>
-                            <div className="flex items-center space-x-1">
+                            <div className="flex items-center space-x-1 flex-shrink-0">
                               <Thermometer className={`h-3 w-3 ${getTemperatureColor(appliance.temperature)}`} />
                               <span className={getTemperatureColor(appliance.temperature)}>
                                 {appliance.temperature}°C
@@ -377,8 +383,8 @@ const VoltageMonitor = () => {
                           disabled={appliance.connectionStatus === 'disconnected'}
                           className={`flex items-center space-x-1 px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
                             appliance.isOn
-                              ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
-                              : 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50'
+                              ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                              : 'bg-green-100 text-green-700 hover:bg-green-200'
                           } disabled:opacity-50 disabled:cursor-not-allowed`}
                         >
                           <Power className="h-3 w-3" />
@@ -389,7 +395,7 @@ const VoltageMonitor = () => {
                             setSelectedAppliance(appliance.id);
                             setShowDetailModal(true);
                           }}
-                          className="p-1 rounded hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors"
+                          className="p-1 rounded hover:bg-blue-100 transition-colors"
                         >
                           <Eye className="h-4 w-4 text-blue-500" />
                         </button>
@@ -400,21 +406,62 @@ const VoltageMonitor = () => {
                     <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
                       <div>
                         <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Voltage</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.voltage.toFixed(1)}V
                         </div>
                       </div>
                       <div>
                         <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Current</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.current.toFixed(1)}A
                         </div>
                       </div>
                       <div>
                         <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Power</span>
-                        <div className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-medium truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.power}W
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Collapsed sidebar view */}
+          <div className={`hidden lg:block ${isSidebarOpen && 'lg:hidden'} p-4`}>
+            <div className="flex flex-col items-center space-y-4">
+              <button
+                onClick={() => setAutoRefresh(!autoRefresh)}
+                className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors duration-200 ${
+                  autoRefresh 
+                    ? 'bg-green-500 hover:bg-green-600 text-white' 
+                    : 'bg-gray-500 hover:bg-gray-600 text-white'
+                }`}
+                title={autoRefresh ? "Auto-refresh ON" : "Auto-refresh OFF"}
+              >
+                <Activity className="h-5 w-5" />
+              </button>
+              
+              {appliances.slice(0, 4).map((appliance) => {
+                const IconComponent = appliance.icon;
+                return (
+                  <div key={appliance.id} className="relative group">
+                    <div className={`p-2 rounded-lg ${getIconBg()}`}>
+                      <IconComponent className={`h-5 w-5 ${getStatusColor(appliance.status)}`} />
+                    </div>
+                    <div className="absolute left-12 top-1/2 -translate-y-1/2 z-50 hidden group-hover:block">
+                      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-md p-3 border border-gray-200 dark:border-gray-700 min-w-40">
+                        <h3 className="font-medium text-sm text-gray-900 dark:text-white">
+                          {appliance.name}
+                        </h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Status: <span className={getStatusColor(appliance.status)}>{appliance.status}</span>
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Power: {appliance.power}W
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -433,7 +480,7 @@ const VoltageMonitor = () => {
         )}
 
         {/* Main Content */}
-        <div className="flex-1 p-4 lg:p-6">
+        <div className="flex-1 p-4 lg:p-6 transition-all duration-300">
           {/* Mobile Menu Button */}
           <div className="lg:hidden mb-4">
             <button
@@ -446,8 +493,23 @@ const VoltageMonitor = () => {
               <span className="text-sm font-medium">Controls</span>
             </button>
           </div>
+          
+          {/* Desktop Toggle Button when sidebar is closed */}
+          {!isSidebarOpen && (
+            <div className="hidden lg:block mb-4">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
+                  isDarkMode ? 'bg-gray-800 hover:bg-gray-700 text-white' : 'bg-white hover:bg-gray-50 text-gray-900'
+                } border ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}
+              >
+                <Menu className="h-5 w-5 mr-2" />
+                <span className="text-sm font-medium">Show Controls</span>
+              </button>
+            </div>
+          )}
 
-          {/* Header */}
+          {/* Header - Hidden on mobile since we have mobile header */}
           <div className="hidden lg:block mb-8">
             <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Real-time Voltage Monitoring
@@ -457,9 +519,13 @@ const VoltageMonitor = () => {
             </p>
           </div>
 
+          {/* Mobile title */}
           <div className="lg:hidden mb-6">
-            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
-              Real-time voltage monitoring and appliance control
+            <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Voltage Monitoring
+            </h1>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mt-1`}>
+              Real-time monitoring and appliance control
             </p>
           </div>
 
@@ -593,22 +659,22 @@ const VoltageMonitor = () => {
                   }`}>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center space-x-3">
-                        <div className={`p-2 rounded-lg ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}>
+                        <div className={`p-2 rounded-lg ${getIconBg()}`}>
                           <IconComponent className={`h-5 w-5 ${getStatusColor(appliance.status)}`} />
                         </div>
-                        <div>
-                          <h4 className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className="min-w-0">
+                          <h4 className={`font-medium text-sm truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                             {appliance.name}
                           </h4>
-                          <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <p className={`text-xs truncate ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             {appliance.location}
                           </p>
                         </div>
                       </div>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      <div className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
                         appliance.isOn 
-                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                          : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-100 text-gray-600'
                       }`}>
                         {appliance.isOn ? 'ON' : 'OFF'}
                       </div>
@@ -617,25 +683,25 @@ const VoltageMonitor = () => {
                     <div className="grid grid-cols-2 gap-3 text-xs">
                       <div>
                         <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Power</span>
-                        <div className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-bold truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.power}W
                         </div>
                       </div>
                       <div>
                         <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Temp</span>
-                        <div className={`font-bold ${getTemperatureColor(appliance.temperature)}`}>
+                        <div className={`font-bold truncate ${getTemperatureColor(appliance.temperature)}`}>
                           {appliance.temperature}°C
                         </div>
                       </div>
                       <div>
                         <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Voltage</span>
-                        <div className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-bold truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.voltage.toFixed(1)}V
                         </div>
                       </div>
                       <div>
                         <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Current</span>
-                        <div className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                        <div className={`font-bold truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                           {appliance.current.toFixed(1)}A
                         </div>
                       </div>
@@ -675,7 +741,7 @@ const VoltageMonitor = () => {
           <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto`}>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-3">
-                <div className={`p-3 rounded-lg ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                <div className={`p-3 rounded-lg ${getIconBg()}`}>
                   <selectedApplianceData.icon className={`h-6 w-6 ${getStatusColor(selectedApplianceData.status)}`} />
                 </div>
                 <div>
@@ -795,8 +861,8 @@ const VoltageMonitor = () => {
                 
                 <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg ${
                   selectedApplianceData.connectionStatus === 'connected'
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                    : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
                 }`}>
                   {selectedApplianceData.connectionStatus === 'connected' ? (
                     <Wifi className="h-4 w-4" />
