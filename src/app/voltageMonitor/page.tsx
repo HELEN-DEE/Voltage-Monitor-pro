@@ -24,8 +24,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
-
+import {useTheme} from '@/components/contexts/ThemeContext'
 
 interface Appliance {
   id: string;
@@ -44,8 +43,9 @@ interface Appliance {
   location: string;
 }
 
+
 const VoltageMonitor = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const {isDarkMode} = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedAppliance, setSelectedAppliance] = useState<string | null>(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -164,12 +164,6 @@ const VoltageMonitor = () => {
     { time: '12:45', voltage: 240.4, frequency: 50.0 }
   ]);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDarkMode(true);
-    }
-  }, []);
 
   // Auto-refresh data every 30 seconds
   useEffect(() => {
