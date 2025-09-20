@@ -44,7 +44,7 @@ const Navbar = ({ isAuthenticated = false }) => {
       <nav className={`${
         isDarkMode 
           ? 'bg-gray-900 border-gray-700' 
-          : 'bg-indigo-600 border-indigo-700'
+          : 'bg-gradient-to-r from-blue-600 to-indigo-700 bg-indigo-600 border-indigo-700'
         } shadow-lg border-b sticky top-0 z-50 transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
