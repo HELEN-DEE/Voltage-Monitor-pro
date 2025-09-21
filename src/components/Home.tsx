@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useTheme } from '@/components/contexts/ThemeContext';
+import Link from 'next/link';
 import { 
   Zap, 
   Activity, 
@@ -123,13 +124,15 @@ const { isDarkMode } = useTheme();
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg ${
+                <Link href="/auth">
+                  <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg ${
                     isDarkMode 
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-400 hover:to-purple-500' 
                     : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600'
                 }`}>
                     Start Monitoring Now
                 </button>
+                </Link>
                 <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
                     isDarkMode 
                     ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 

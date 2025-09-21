@@ -110,7 +110,7 @@ const Navbar = ({ isAuthenticated = false }) => {
               {!isAuthenticated ? (
                 <div className="flex items-center space-x-2">
                   <Link
-                    href="/login"
+                    href="/auth"
                     className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                       isDarkMode 
                         ? 'text-gray-300 hover:text-white hover:bg-gray-800' 
@@ -222,7 +222,7 @@ const Navbar = ({ isAuthenticated = false }) => {
               {!isAuthenticated ? (
                 <>
                   <Link
-                    href="/login"
+                    href="/auth"
                     onClick={closeMobileMenu}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
                       isDarkMode 
