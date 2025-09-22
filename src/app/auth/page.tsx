@@ -8,10 +8,10 @@ import {
   Lock, 
   Eye, 
   EyeOff, 
-  User, 
+  
   Building2, 
   ArrowRight, 
-  CheckCircle,
+  
   Github,
   Shield,
   BarChart3,
@@ -119,7 +119,7 @@ const AuthFlow: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <div className="min-h-screen flex">
+      <div className="min-h-screen lg:flex block">
         {/* Left Side - Benefits */}
         <div className={`"hidden lg:flex lg:w-1/2 relative overflow-hidden" 
         ${isDarkMode 
@@ -213,17 +213,7 @@ const AuthFlow: React.FC = () => {
                 <GoogleIcon />
                 {isSignUp ? 'Sign up' : 'Sign in'} with Google
               </button>
-              <button
-                onClick={() => handleSocialAuth('GitHub')}
-                className={`w-full flex items-center justify-center px-4 py-3 border rounded-lg font-medium transition-colors ${
-                  isDarkMode
-                    ? 'border-gray-600 bg-gray-700 text-white hover:bg-gray-600'
-                    : 'border-gray-300 bg-white text-gray-900 hover:bg-gray-50'
-                }`}
-              >
-                <Github className="w-5 h-5 mr-3" />
-                {isSignUp ? 'Sign up' : 'Sign in'} with GitHub
-              </button>
+              
             </div>
 
             {/* Divider */}

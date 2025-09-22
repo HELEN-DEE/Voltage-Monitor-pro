@@ -234,11 +234,11 @@ const Navbar = ({ isAuthenticated = false }) => {
                     <span>Sign In</span>
                   </Link>
                   <Link
-                    href="/register"
+                    href="/auth"
                     onClick={closeMobileMenu}
                     className={`flex items-center justify-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
                       isDarkMode 
-                        ? 'bg-blue-600 text-white hover:bg-blue-500' 
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-700 bg-indigo-600 text-white hover:bg-blue-500' 
                         : 'bg-white text-indigo-600 hover:bg-indigo-50'
                       }`}
                   >

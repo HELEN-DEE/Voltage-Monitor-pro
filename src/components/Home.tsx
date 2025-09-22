@@ -129,18 +129,21 @@ const { isDarkMode } = useTheme();
                     isDarkMode 
                     ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-400 hover:to-purple-500' 
                     : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600'
-                }`}>
-                    Start Monitoring Now
-                </button>
+                  }`}>
+                      Start Monitoring Now
+                  </button>
                 </Link>
-                <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
+
+                <Link href="/demo">
+                  <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
                     isDarkMode 
                     ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
                     : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50'
-                }`}>
-                <Play className="h-5 w-5" />
-                View Live Demo
-              </button>
+                  }`}>
+                  <Play className="h-5 w-5" />
+                  View Live Demo
+                </button>
+                </Link>
             </div>
           </div>
         </div>
@@ -370,12 +373,16 @@ const { isDarkMode } = useTheme();
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="px-8 py-4 bg-white text-blue-600 hover:text-blue-700 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg flex items-center gap-2">
-              Get Started Free <ArrowRight className="h-5 w-5" />
-            </button>
-            <button className="px-8 py-4 bg-transparent text-white border-2 border-white hover:bg-white hover:text-blue-600 font-semibold rounded-xl transition-all duration-300">
+            <Link href="/getStarted">
+              <button className="px-8 py-4 bg-white text-blue-600 hover:text-blue-700 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg flex items-center gap-2">
+                Get Started Free <ArrowRight className="h-5 w-5" />
+              </button>
+            </Link>
+            <Link href="/demo">
+                <button className="px-8 py-4 bg-transparent text-white border-2 border-white hover:bg-white hover:text-blue-600 font-semibold rounded-xl transition-all duration-300">
               Schedule Demo
-            </button>
+              </button>
+            </Link>
           </div>
           
           <p className="text-blue-100 mt-6 text-sm">
