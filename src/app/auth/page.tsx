@@ -12,7 +12,7 @@ import {
   Building2, 
   ArrowRight, 
   
-  Github,
+  
   Shield,
   BarChart3,
   Bell,
