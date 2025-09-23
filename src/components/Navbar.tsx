@@ -117,7 +117,7 @@ const Navbar = ({ isAuthenticated = false }) => {
                         : 'text-indigo-100 hover:text-white hover:bg-indigo-500'
                       }`}
                   >
-                    <LogIn className="h-4 w-4" />
+                    {/* <LogIn className="h-4 w-4" /> */}
                     <span className="text-sm">Sign In</span>
                   </Link>
                   <Link

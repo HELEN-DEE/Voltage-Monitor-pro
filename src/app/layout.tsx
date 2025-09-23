@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {ThemeProvider } from "@/components/contexts/ThemeContext";
+import { PageTransition } from "@/components/UI/PageTransition";
 import Navbar from '@/components/Navbar'
 
 const geistSans = Geist({
@@ -32,7 +33,9 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Navbar />
-          {children}
+          <PageTransition>
+            <main>{children}</main>
+          </PageTransition>
         </ThemeProvider>
       </body>
     </html>
