@@ -82,8 +82,8 @@ const { isDarkMode } = useTheme();
     return (
         <div className={`min-h-screen transition-colors duration-300 ${
         isDarkMode 
-            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-            : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50'
+            ? 'bg-[#08090A]' 
+            : 'bg-[#F7F8FA]'
         }`}>
         {/* Hero Section */}
         <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -112,7 +112,7 @@ const { isDarkMode } = useTheme();
                     ? 'from-blue-400 to-purple-400' 
                     : 'from-blue-600 to-indigo-700'
                 }`}>
-                    Voltage Monitor Pro
+                    VoltWatch 
                 </span>
                 </h1>
                 
@@ -395,7 +395,4 @@ const { isDarkMode } = useTheme();
 };
 
 export default Homepage;
-
-
-
 

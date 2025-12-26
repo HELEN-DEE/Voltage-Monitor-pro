@@ -41,29 +41,27 @@ const Navbar = ({ isAuthenticated = false }) => {
 
   return (
     <>
-      <nav className={`${
+      <nav className= {`${
         isDarkMode 
           ? 'bg-gray-900 border-gray-700' 
-          : 'bg-gradient-to-r from-blue-600 to-indigo-700 bg-indigo-600 border-indigo-700'
-        } shadow-lg border-b sticky top-0 z-50 transition-colors duration-300`}>
+          : 'bg-gray-700  border-gray-900'
+        } shadow-lg border-b sticky top-0 z-50 transition-colors duration-300`}
+        >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo and Brand */}
             <Link href="/" className="flex items-center space-x-3 group shrink-0">
-              <div className={`flex items-center justify-center w-10 h-10 ${
-                isDarkMode 
-                  ? 'bg-gradient-to-br from-blue-400 via-gray-800 to-purple-600' 
-                  : 'bg-gradient-to-br from-indigo-400 via-indigo-100 to-blue-200'
-                } rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300`}>
-                <Zap className="h-6 w-6 text-white" />
+              <div className= "flex items-center justify-center"
+                >
+                <Zap className=" text-white" />
               </div>
               <div className="flex flex-col">
                 <span className={`text-lg font-bold whitespace-nowrap ${
                   isDarkMode 
-                    ? 'text-white' 
+                    ? 'text-white ' 
                     : 'text-white'
                   }`}>
-                  Voltage Monitor <span className="text-amber-400">Pro</span>
+                  VoltWatch <span className="text-amber-300">grid</span>
                 </span>
                 
               </div>
@@ -80,8 +78,8 @@ const Navbar = ({ isAuthenticated = false }) => {
                     href={link.href}
                     className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 ${
                       isDarkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800' 
-                        : 'text-indigo-100 hover:text-white hover:bg-indigo-500'
+                        ? 'text-gray-300 hover:text-amber-400 hover:bg-[#08090A]' 
+                        : 'text-indigo-100 hover:text-amber-400 hover:bg-[#F7F8FA]'
                       }`}
                   >
                     <IconComponent className="h-4 w-4" />
@@ -98,8 +96,8 @@ const Navbar = ({ isAuthenticated = false }) => {
                 onClick={toggleDarkMode}
                 className={`flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 ${
                   isDarkMode 
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-800' 
-                    : 'text-indigo-100 hover:text-white hover:bg-indigo-500'
+                    ? 'text-gray-300 hover:text-amber-400 hover:bg-[#08090A]' 
+                    : 'text-indigo-100 hover:text-amber-400 hover:bg-[#F7F8FA]'
                   }`}
                 aria-label="Toggle dark mode"
               >
