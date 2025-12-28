@@ -5,12 +5,14 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 interface ThemeContextType {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  mounted: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [isDarkMode, setIsDarkMode] = useState(false); 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -19,9 +21,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setIsDarkMode(true);
       document.documentElement.classList.add('dark');
     } else {
-      setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
+
+    setMounted(true); // 👈 VERY IMPORTANT
   }, []);
 
   const toggleDarkMode = () => {
@@ -41,7 +44,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode, mounted }}>
       {children}
     </ThemeContext.Provider>
   );

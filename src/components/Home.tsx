@@ -82,17 +82,17 @@ const { isDarkMode } = useTheme();
     return (
         <div className={`min-h-screen transition-colors duration-300 ${
         isDarkMode 
-            ? 'bg-[#08090A]' 
-            : 'bg-[#F7F8FA]'
+            ? 'bg-[#020617]' 
+            : 'bg-[#F8FAFC]'
         }`}>
         {/* Hero Section */}
         <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
             {/* Background elements */}
-            <div className="absolute top-0 left-0 right-0 h-96 opacity-10">
+            {/* <div className="absolute top-0 left-0 right-0 h-96 opacity-10">
             <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
             <div className="absolute top-0 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-20 w-72 h-72 bg-cyan-400 rounded-full blur-3xl"></div>
-            </div>
+            </div> */}
             
             <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center">

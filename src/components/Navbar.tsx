@@ -11,7 +11,6 @@ import {
   LayoutDashboard, 
   Settings, 
   User,
-  LogIn,
   UserPlus,
   Activity,
   Moon,
@@ -21,8 +20,12 @@ import { useTheme } from '@/components/contexts/ThemeContext'; // Import the hoo
 
 const Navbar = ({ isAuthenticated = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useTheme(); // Use the theme context
+  const { isDarkMode, toggleDarkMode, mounted } = useTheme(); // Use the theme context
   // const router = useRouter();
+
+  if (!mounted) {
+    return null; 
+  }
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,8 +46,8 @@ const Navbar = ({ isAuthenticated = false }) => {
     <>
       <nav className= {`${
         isDarkMode 
-          ? 'bg-gray-900 border-gray-700' 
-          : 'bg-gray-700  border-gray-900'
+          ? 'bg-[#020617] border-[#1E293B]' 
+          : 'bg-white border-[#E2E8F0]'
         } shadow-lg border-b sticky top-0 z-50 transition-colors duration-300`}
         >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,18 +56,18 @@ const Navbar = ({ isAuthenticated = false }) => {
             <Link href="/" className="flex items-center space-x-3 group shrink-0">
               <div className= "flex items-center justify-center"
                 >
-                <Zap className=" text-white" />
+                <Zap className=" text-[#475569]" />
               </div>
               <div className="flex flex-col">
-                <span className={`text-lg font-bold whitespace-nowrap ${
+                <span className={`text-lg font-bold whitespace-nowrap font-serif ${
                   isDarkMode 
                     ? 'text-white ' 
-                    : 'text-white'
+                    : 'text-[#475569]'
                   }`}>
                   VoltWatch <span className="text-amber-300">grid</span>
                   
                 </span>
-                <span className='text-gray-200 text-[10px] '>
+                <span className='text-gray-300 text-[10px] '>
                   Real-time voltage intelligence for unstable power systems
                 </span>
               </div>
@@ -81,8 +84,8 @@ const Navbar = ({ isAuthenticated = false }) => {
                     href={link.href}
                     className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 ${
                       isDarkMode 
-                        ? 'text-gray-300 hover:text-amber-400 hover:bg-[#08090A]' 
-                        : 'text-indigo-100 hover:text-amber-400 hover:bg-[#F7F8FA]'
+                        ? 'text-[#94A3B8] hover:text-white hover:bg-[#2563EB]' 
+                        : 'text-[#475569] hover:text-white hover:bg-[#2563EB]'
                       }`}
                   >
                     <IconComponent className="h-4 w-4" />
@@ -115,18 +118,18 @@ const Navbar = ({ isAuthenticated = false }) => {
                     className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                       isDarkMode 
                         ? 'text-gray-300 hover:text-white hover:bg-gray-800' 
-                        : 'text-indigo-100 hover:text-white hover:bg-indigo-500'
+                        : 'text-[#475569]  hover:bg-gray-200'
                       }`}
                   >
-                    {/* <LogIn className="h-4 w-4" /> */}
+                    
                     <span className="text-sm">Sign In</span>
                   </Link>
                   <Link
                     href="/register"
                     className={`flex items-center space-x-1.5 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:shadow ${
                       isDarkMode 
-                        ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white hover:bg-blue-500' 
-                        : 'bg-white text-indigo-600 hover:bg-indigo-50'
+                        ? 'bg-[#2563EB] text-white hover:bg-blue-500' 
+                        : 'bg-[#2563EB] text-white hover:text-[#2563EB] hover:bg-indigo-50'
                       }`}
                   >
                     <UserPlus className="h-4 w-4" />
