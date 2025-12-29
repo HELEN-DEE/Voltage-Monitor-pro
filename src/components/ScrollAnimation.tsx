@@ -1,7 +1,7 @@
 // components/ScrollAnimation.tsx
 'use client';
 
-import { motion, useInView, useAnimation, Variants } from 'framer-motion';
+import { motion, useInView, useAnimation, Variants, cubicBezier } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 interface ScrollAnimationProps {
@@ -39,7 +39,7 @@ const defaultVariants = {
 
 const transition = {
   duration: 0.7, // Slightly faster
-  ease: [0.25, 0.46, 0.45, 0.94]
+  ease: cubicBezier(0.25, 0.46, 0.45, 0.94)
 };
 
 export const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
@@ -52,11 +52,11 @@ export const ScrollAnimation: React.FC<ScrollAnimationProps> = ({
   triggerOnce = false
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    threshold,
-    once: triggerOnce,
-    margin: '0px' // Changed from -50px to prevent overflow
-  });
+  const isInView = useInView(ref, {
+  once: triggerOnce,
+  margin: '0px',
+  amount: threshold // 
+});
   const controls = useAnimation();
 
   useEffect(() => {
