@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { useTheme } from '@/components/contexts/ThemeContext';
+import Waveform from '../components/Waveform';
 import Link from 'next/link';
 import { 
-  Zap, 
+   
   Activity, 
   Shield, 
   TrendingUp, 
@@ -15,7 +16,6 @@ import {
   AlertTriangle,
   Clock,
   ArrowRight,
-  Play
 } from 'lucide-react';
 
 const Homepage = () => {
@@ -85,69 +85,73 @@ const { isDarkMode } = useTheme();
             ? 'bg-[#020617]' 
             : 'bg-[#F8FAFC]'
         }`}>
-        {/* Hero Section */}
-        <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-            {/* Background elements */}
-            {/* <div className="absolute top-0 left-0 right-0 h-96 opacity-10">
-            <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
-            <div className="absolute top-0 right-20 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-20 w-72 h-72 bg-cyan-400 rounded-full blur-3xl"></div>
-            </div> */}
-            
-            <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center">
-                <div className="flex justify-center mb-8">
-                <div className={`flex items-center justify-center w-20 h-20 rounded-2xl shadow-2xl ${
-                    isDarkMode 
-                        ? 'bg-gradient-to-br from-blue-400 via-gray-800 to-purple-400  ' 
-                        : 'bg-gradient-to-br from-indigo-400 via-indigo-100 to-blue-200'
-                }`}>
-                    <Zap className="h-10 w-10 text-white" />
-                </div>
-            </div>
-            
-                <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                    isDarkMode 
-                    ? 'from-blue-400 to-purple-400' 
-                    : 'from-blue-600 to-indigo-700'
-                }`}>
-                    VoltWatch 
-                </span>
-                </h1>
-                
-                <p className={`text-xl md:text-2xl mb-8 max-w-4xl mx-auto leading-relaxed ${
-                isDarkMode ? 'text-gray-300' : 'text-gray-600'
-                }`}>
-                Advanced electrical monitoring system that tracks voltage fluctuations, protects your appliances, 
-                and provides comprehensive analytics for optimal electrical safety and efficiency.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link href="/auth">
-                  <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg ${
-                    isDarkMode 
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-400 hover:to-purple-500' 
-                    : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:from-blue-500 hover:to-indigo-600'
-                  }`}>
-                      Start Monitoring Now
-                  </button>
-                </Link>
+        <section className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none opacity-10">
+    <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <path
+            d="M 60 0 L 0 0 0 60"
+            fill="none"
+            stroke={isDarkMode ? '#3b82f6' : '#94a3b8'}
+            strokeWidth="1"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
 
-                <Link href="/demo">
-                  <button className={`px-8 py-4 font-semibold rounded-xl transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
-                    isDarkMode 
-                    ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
-                    : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50'
-                  }`}>
-                  <Play className="h-5 w-5" />
-                  View Live Demo
+          <div className="max-w-5xl mx-auto text-center relative">
+            
+            <h1
+              className={`text-5xl md:text-7xl font-bold mb-6 ${
+                isDarkMode ? 'text-white' : 'text-[#020617]'
+              }`}
+            >
+              Know your voltage before it damages your devices.
+            </h1>
+
+            <p
+              className={`text-xl md:text-2xl max-w-3xl mx-auto mb-14 ${
+                isDarkMode ? 'text-gray-300' : 'text-[#475569]'
+              }`}
+            >
+              VoltWatch is being built to monitor voltage fluctuations in real time,
+              detect dangerous spikes early, and help people understand the quality
+              of power their devices actually receive.
+            </p>
+
+            {/* 👇 Waveform lives here */}
+            <Waveform isDarkMode={isDarkMode} />
+
+            <div className="relative z-10 mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/how-it-works">
+                <button
+                  className="px-8 py-4 rounded-xl font-semibold transition-all bg-[#2563EB] text-white hover:bg-blue-500"
+                >
+                  How VoltWatch will work
                 </button>
-                </Link>
+              </Link>
+
+              <Link href="/problem">
+                <button
+                  className={`px-8 py-4 rounded-xl font-semibold border transition-all ${
+                    isDarkMode
+                      ? 'border-gray-700 text-gray-300 hover:bg-gray-800'
+                      : 'border-gray-300 text-[#475569] hover:bg-gray-100'
+                  }`}
+                >
+                  Why unstable power is a problem
+                </button>
+              </Link>
             </div>
+                  {/* 👇 Waveform lives here */}
+            <Waveform isDarkMode={isDarkMode} />
           </div>
-        </div>
-      </section>
+        </section>
+
+
 
       {/* Stats Section */}
       <section className={`py-16 px-4 sm:px-6 lg:px-8 ${
