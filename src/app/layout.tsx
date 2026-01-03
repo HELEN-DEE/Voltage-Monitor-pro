@@ -4,6 +4,7 @@ import "./globals.css";
 import {ThemeProvider } from "@/components/contexts/ThemeContext";
 import { PageTransition } from "@/components/UI/PageTransition";
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,9 +34,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Navbar />
+          
           <PageTransition>
             <main>{children}</main>
           </PageTransition>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
