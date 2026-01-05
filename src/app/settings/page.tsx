@@ -637,11 +637,11 @@ const [formData, setFormData] = useState({
                     className={`w-full flex items-start space-x-3 px-4 py-3 text-left rounded-lg transition-colors ${
                         activeSection === section.id
                         ? isDarkMode
-                            ? 'bg-gradient-to-r from-blue-600 to-purple-700 text-white'
-                            : 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white'
+                            ? 'bg-gray-800 text-white'
+                            : 'bg-slate-200 text-gray-900'
                         : isDarkMode
-                            ? 'text-gray-300 hover:bg-gray-700'
-                            : 'text-gray-700 hover:bg-gray-100'
+                            ? 'text-slate-400 hover:bg-gray-800'
+                            : 'text-slate-700 hover:bg-slate-100'
                     }`}
                     >
                     <div className="flex-shrink-0">
@@ -651,10 +651,8 @@ const [formData, setFormData] = useState({
                         <div className="font-medium">{section.title}</div>
                         <div className={`text-sm mt-1 ${
                         activeSection === section.id
-                            ? 'text-blue-100'
-                            : isDarkMode
-                            ? 'text-gray-400'
-                            : 'text-gray-500'
+                            ? isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                        : isDarkMode ? 'text-slate-500' : 'text-slate-500'
                         }`}>
                         {section.description}
                         </div>
@@ -689,7 +687,7 @@ const [formData, setFormData] = useState({
                     <button
                         type="button"
                         onClick={handleSave}
-                        className={`inline-flex items-center px-4 py-2 text-sm font-medium text-white  rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isDarkMode ? 'bg-gradient-to-r from-blue-600 to-purple-700 hover:bg-purple-700' : 'bg-gradient-to-r from-blue-600 to-indigo-700 hover:bg-blue-700'}`}
+                        className= "inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md bg-blue-600 hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         <Save className="w-4 h-4 mr-2" />
                         Save Changes

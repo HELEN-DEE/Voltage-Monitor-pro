@@ -67,7 +67,7 @@ const Navbar = ({ isAuthenticated = false }) => {
                   VoltWatch <span className="text-amber-300">grid</span>
                   
                 </span>
-                <span className='text-gray-300 text-[10px] '>
+                <span className='text-gray-400 text-[10px] '>
                   Real-time voltage intelligence for unstable power systems
                 </span>
               </div>

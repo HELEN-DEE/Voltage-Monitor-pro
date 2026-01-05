@@ -66,7 +66,7 @@ const HeroSection = () => {
             and gives you complete visibility into your power quality.
           </p>
 
-          {/* Waveform with enhanced container */}
+          {/* Waveform with container */}
           <div className="mb-12 p-6 rounded-2xl backdrop-blur-sm border border-opacity-20"
             style={{
               backgroundColor: isDarkMode ? 'rgba(30, 41, 59, 0.4)' : 'rgba(255, 255, 255, 0.6)',
@@ -84,7 +84,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Enhanced CTA Buttons */}
+          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Link href="/how-it-works">
               <button className="group relative px-8 py-4 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
@@ -116,7 +116,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* RIGHT — Enhanced Image Container */}
+        {/* RIGHT — Image Container */}
         <div className="relative z-10 lg:bottom-12">
           <div className="relative group">
             {/* Glow effect */}
