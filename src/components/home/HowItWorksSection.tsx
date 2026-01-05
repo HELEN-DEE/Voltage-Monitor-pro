@@ -35,7 +35,9 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
   const { isDarkMode } = useTheme();
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
+      isDarkMode ? 'bg-slate-950' : ''
+    }`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
@@ -44,7 +46,7 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
             How It Works
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            isDarkMode ? 'text-slate-400' : 'text-gray-600'
           }`}>
             Get started with professional voltage monitoring in three simple steps.
           </p>
@@ -54,17 +56,19 @@ const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({
           {steps.map((step) => (
             <div key={step.number} className="text-center">
               <div className={`flex items-center justify-center w-16 h-16 font-bold text-xl rounded-full mx-auto mb-6 shadow-lg ${
-                isDarkMode 
-                  ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white' 
-                  : 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white'
+                isDarkMode
+                  ? 'bg-blue-500/15 text-blue-400 border border-blue-500/30'
+                  : 'bg-blue-600 text-white'
               }`}>
                 {step.number}
               </div>
               <h3 className={`text-2xl font-semibold mb-4 ${
                 isDarkMode ? 'text-white' : 'text-gray-900'
-              }`}>{step.title}</h3>
+              }`}>
+                {step.title}
+              </h3>
               <p className={`leading-relaxed ${
-                isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                isDarkMode ? 'text-slate-400' : 'text-gray-600'
               }`}>
                 {step.description}
               </p>

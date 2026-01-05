@@ -109,7 +109,7 @@ const Footer = () => {
                     isDarkMode ? 'text-gray-500' : 'text-gray-400'
                 }`}
                 >
-                © {new Date().getFullYear()} VoltWatch. Built thoughtfully.
+                © 2025 VoltWatch. Built thoughtfully.
                 </p>
             </div>
             </div>

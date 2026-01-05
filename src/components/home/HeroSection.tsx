@@ -58,7 +58,7 @@ const HeroSection = () => {
           </h1>
 
           <p
-            className={`text-xl md:text-2xl mb-12 max-w-2xl leading-relaxed ${
+            className={`text-lg md:text-xl mb-12 max-w-2xl leading-relaxed ${
               isDarkMode ? 'text-gray-300' : 'text-[#475569]'
             }`}
           >

@@ -102,8 +102,8 @@ const Navbar = ({ isAuthenticated = false }) => {
                 onClick={toggleDarkMode}
                 className={`flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 ${
                   isDarkMode 
-                    ? 'text-gray-300 hover:text-amber-400 hover:bg-[#08090A]' 
-                    : 'text-indigo-100 hover:text-amber-400 hover:bg-[#F7F8FA]'
+                    ? 'text-gray-300 hover:text-amber-400 hover:bg-[#15181b]' 
+                    : 'text-[#475569] hover:text-amber-400 hover:bg-[#F7F8FA]'
                   }`}
                 aria-label="Toggle dark mode"
               >
@@ -165,40 +165,43 @@ const Navbar = ({ isAuthenticated = false }) => {
             <button
               onClick={toggleMobileMenu}
               className={`lg:hidden flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200 ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-800' 
-                  : 'text-indigo-100 hover:text-white hover:bg-indigo-500'
-                }`}
+                isDarkMode
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+              }`}
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
+
           </div>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`lg:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden ${
-          isDarkMode 
-            ? 'bg-gray-800 border-gray-700' 
-            : 'bg-indigo-700 border-indigo-800'
-          } border-t`}>
+        <div
+          className={`lg:hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          } overflow-hidden ${
+            isDarkMode
+              ? 'bg-gray-900 border-gray-700'
+              : 'bg-white border-gray-200'
+          } border-t`}
+        >
           <div className="px-4 py-4 space-y-2">
             {/* Mobile Navigation Links */}
             {navigationLinks.map((link) => {
               const IconComponent = link.icon;
-              
+
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={closeMobileMenu}
                   className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
-                    isDarkMode 
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                      : 'text-indigo-100 hover:text-white hover:bg-indigo-600'
-                    }`}
+                    isDarkMode
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                      : 'text-gray-800 hover:bg-gray-100'
+                  }`}
                 >
                   <IconComponent className="h-5 w-5" />
                   <span>{link.label}</span>
@@ -210,41 +213,43 @@ const Navbar = ({ isAuthenticated = false }) => {
             <button
               onClick={toggleDarkMode}
               className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
-                isDarkMode 
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                  : 'text-indigo-100 hover:text-white hover:bg-indigo-600'
-                }`}
+                isDarkMode
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                  : 'text-gray-800 hover:bg-gray-100'
+              }`}
             >
               {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
             </button>
 
             {/* Mobile Auth Section */}
-            <div className={`pt-3 space-y-2 ${
-              isDarkMode ? 'border-gray-600' : 'border-indigo-600'
-              } border-t`}>
+            <div
+              className={`pt-3 space-y-2 ${
+                isDarkMode ? 'border-gray-700' : 'border-gray-200'
+              } border-t`}
+            >
               {!isAuthenticated ? (
                 <>
                   <Link
                     href="/auth"
                     onClick={closeMobileMenu}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
-                      isDarkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                        : 'text-indigo-100 hover:text-white hover:bg-indigo-600'
-                      }`}
+                      isDarkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        : 'text-gray-800 hover:bg-gray-100'
+                    }`}
                   >
-                    
                     <span>Sign In</span>
                   </Link>
+
                   <Link
                     href="/auth"
                     onClick={closeMobileMenu}
                     className={`flex items-center justify-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
-                      isDarkMode 
-                        ? 'bg-gradient-to-r from-blue-600 to-indigo-700 bg-indigo-600 text-white hover:bg-blue-500' 
-                        : 'bg-white text-indigo-600 hover:bg-indigo-50'
-                      }`}
+                      isDarkMode
+                        ? 'bg-indigo-600 text-white hover:bg-indigo-500'
+                        : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                    }`}
                   >
                     <UserPlus className="h-5 w-5" />
                     <span>Register</span>
@@ -256,20 +261,21 @@ const Navbar = ({ isAuthenticated = false }) => {
                     href="/profile"
                     onClick={closeMobileMenu}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 w-full ${
-                      isDarkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
-                        : 'text-indigo-100 hover:text-white hover:bg-indigo-600'
-                      }`}
+                      isDarkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        : 'text-gray-800 hover:bg-gray-100'
+                    }`}
                   >
                     <User className="h-5 w-5" />
                     <span>Profile</span>
                   </Link>
+
                   <button
                     onClick={() => {
                       closeMobileMenu();
                       console.log('Logout clicked');
                     }}
-                    className="flex items-center space-x-3 px-4 py-3 text-red-300 hover:text-white hover:bg-red-500 rounded-lg transition-all duration-200 w-full text-left font-medium"
+                    className="flex items-center space-x-3 px-4 py-3 text-red-400 hover:text-white hover:bg-red-600 rounded-lg transition-all duration-200 w-full text-left font-medium"
                   >
                     <span>Logout</span>
                   </button>
@@ -282,8 +288,8 @@ const Navbar = ({ isAuthenticated = false }) => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        <div
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
           onClick={closeMobileMenu}
         />
       )}

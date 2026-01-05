@@ -36,22 +36,28 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
   const { isDarkMode } = useTheme();
 
   return (
-    <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
-      isDarkMode 
-        ? 'bg-gray-800' 
-        : 'bg-gray-50'
-    }`}>
+    <section
+      className={`py-20 px-4 sm:px-6 lg:px-8 ${
+        isDarkMode ? 'bg-slate-950' : 'bg-gray-50'
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
-            isDarkMode ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2
+            className={`text-4xl md:text-5xl font-bold mb-6 ${
+              isDarkMode ? 'text-white' : 'text-gray-900'
+            }`}
+          >
             Why Choose
-            <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-              isDarkMode 
-                ? 'from-blue-400 to-purple-400' 
-                : 'from-blue-600 to-indigo-700'
-            }`}> VoltWatch</span>
+            <span
+              className={`bg-gradient-to-r bg-clip-text text-transparent ${
+                isDarkMode
+                  ? 'from-blue-600 to-cyan-600'
+                  : 'from-blue-600 to-indigo-700'
+              }`}
+            >
+              {' '}VoltWatch
+            </span>
           </h2>
         </div>
         
@@ -59,28 +65,39 @@ const BenefitsSection: React.FC<BenefitsSectionProps> = ({
           {benefits.map((benefit, index) => {
             const IconComponent = benefit.icon;
             return (
-              <div key={index} className={`p-8 rounded-2xl shadow-lg border ${
-                isDarkMode 
-                  ? 'bg-gray-700 border-gray-600' 
-                  : 'bg-white border-gray-200'
-              }`}>
-                <div className={`flex items-center justify-center w-14 h-14 rounded-xl mb-6 ${
-                  isDarkMode 
-                    ? 'bg-blue-900/30' 
-                    : 'bg-blue-100'
-                }`}>
-                  <IconComponent className={`h-7 w-7 ${
-                    isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                  }`} />
+              <div
+                key={index}
+                className={`group p-8 rounded-2xl border transition-all duration-300 hover:scale-[1.03] ${
+                  isDarkMode
+                    ? 'bg-slate-900 border-slate-800 hover:border-blue-500/50 hover:shadow-blue-500/10'
+                    : 'bg-white border-gray-200 shadow-lg hover:shadow-2xl'
+                }`}
+              >
+                <div
+                  className={`flex items-center justify-center w-14 h-14 rounded-xl mb-6 transition-transform duration-300 group-hover:scale-110 ${
+                    isDarkMode
+                      ? 'bg-blue-500/10'
+                      : 'bg-blue-100'
+                  }`}
+                >
+                  <IconComponent
+                    className={`h-7 w-7 ${
+                      isDarkMode ? 'text-blue-400' : 'text-blue-600'
+                    }`}
+                  />
                 </div>
-                <h3 className={`text-xl font-semibold mb-4 ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>
+                <h3
+                  className={`text-xl font-semibold mb-4 ${
+                    isDarkMode ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
                   {benefit.title}
                 </h3>
-                <p className={`leading-relaxed ${
-                  isDarkMode ? 'text-gray-300' : 'text-gray-600'
-                }`}>
+                <p
+                  className={`leading-relaxed ${
+                    isDarkMode ? 'text-slate-400' : 'text-gray-600'
+                  }`}
+                >
                   {benefit.description}
                 </p>
               </div>

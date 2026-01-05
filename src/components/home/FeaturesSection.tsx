@@ -59,7 +59,9 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   const { isDarkMode } = useTheme();
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
+      isDarkMode ? 'bg-slate-950' : ''
+    }`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
@@ -68,12 +70,14 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({
             Powerful Features for
             <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
               isDarkMode 
-                ? 'from-blue-400 to-purple-400' 
+                ? 'from-blue-600 to-cyan-600' 
                 : 'from-blue-600 to-indigo-700'
-            }`}> Complete Control</span>
+            }`}>
+              {' '}Complete Control
+            </span>
           </h2>
           <p className={`text-xl max-w-3xl mx-auto ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            isDarkMode ? 'text-slate-400' : 'text-gray-600'
           }`}>
             Everything you need to monitor, analyze, and protect your electrical systems in one comprehensive platform.
           </p>
@@ -83,15 +87,18 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <div key={index} className={`group p-8 rounded-2xl shadow-lg hover:shadow-2xl border transition-all duration-300 hover:scale-105 ${
-                isDarkMode 
-                  ? 'bg-gray-800 border-gray-700 hover:border-blue-500' 
-                  : 'bg-white border-gray-200 hover:border-blue-400'
-              }`}>
-                <div className={`flex items-center justify-center w-14 h-14 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300 ${
-                  isDarkMode 
-                    ? 'bg-gradient-to-br from-blue-900 to-purple-900' 
-                    : 'bg-gradient-to-br from-blue-100 to-indigo-100'
+              <div
+                key={index}
+                className={`group p-8 rounded-2xl border transition-all duration-300 hover:scale-[1.03] ${
+                  isDarkMode
+                    ? 'bg-slate-900 border-slate-800 hover:border-blue-500/50 hover:shadow-blue-500/10'
+                    : 'bg-white border-gray-200 hover:border-blue-400 shadow-lg hover:shadow-2xl'
+                }`}
+              >
+                <div className={`flex items-center justify-center w-14 h-14 rounded-xl mb-6 transition-transform duration-300 group-hover:scale-110 ${
+                  isDarkMode
+                    ? 'bg-blue-500/10'
+                    : 'bg-blue-100'
                 }`}>
                   <IconComponent className={`h-7 w-7 ${
                     isDarkMode ? 'text-blue-400' : 'text-blue-600'
@@ -103,7 +110,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                   {feature.title}
                 </h3>
                 <p className={`leading-relaxed ${
-                  isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                  isDarkMode ? 'text-slate-400' : 'text-gray-600'
                 }`}>
                   {feature.description}
                 </p>
