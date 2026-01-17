@@ -1,605 +1,200 @@
-// app/how-it-works/page.tsx
 'use client';
 
 import React from 'react';
 import { useTheme } from '@/components/contexts/ThemeContext';
-import Link from 'next/link';
-import { 
-  Zap, 
-  Cpu,
-  Wifi,
-  Shield,
-  AlertTriangle,
-  BarChart3,
-  Smartphone,
-  Cloud,
-  Settings,
-  CheckCircle,
-  Clock,
-  Battery,
-  Thermometer,
-  Plug,
-  HardDrive,
-  SmartphoneCharging,
-  Server,
-  Home,
-  Building,
-  Factory,
-  ArrowRight,
-  Download,
-  Upload,
-  Activity,
-  Eye,
-  Bell
-} from 'lucide-react';
 
-const HowItWorksPage = () => {
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark';
+const HowItWorksSection = () => {
+  const { isDarkMode } = useTheme();
 
-  const monitoringSteps = [
+  const steps = [
     {
-      number: 1,
-      icon: Plug,
-      title: "Install Voltage Sensors",
-      description: "Install our compact voltage sensors directly into your electrical outlets or connect them to your main electrical panel.",
-      features: [
-        "Non-invasive installation",
-        "No wiring modifications needed",
-        "Fits standard electrical boxes"
+      number: "01",
+      title: "Sensor Installation & Connection",
+      description: "VoltWatch uses high-precision voltage sensors that connect directly to your electrical panel or individual circuits. These industrial-grade sensors continuously sample the AC waveform at 10,000 times per second (10kHz), capturing every nuance of your power supply. The sensors measure RMS voltage, peak voltage, frequency, and waveform distortion—all critical indicators of power quality.",
+      technicalDetails: [
+        "Non-invasive clamp-on installation",
+        "Supports 110V-240V systems",
+        "±0.5% voltage accuracy",
+        "Wireless or ethernet connectivity"
       ],
-      image: "/images/sensor-installation.jpg"
+      
     },
     {
-      number: 2,
-      icon: Wifi,
-      title: "Connect to VoltWatch Cloud",
-      description: "Sensors automatically connect to your WiFi and establish a secure connection to our cloud platform.",
-      features: [
-        "Automatic pairing",
-        "End-to-end encryption",
-        "Real-time data streaming"
+      number: "02",
+      title: "Real-Time Signal Processing",
+      description: "Our proprietary algorithms analyze the voltage data in real-time using advanced digital signal processing techniques. The system performs Fast Fourier Transform (FFT) analysis to detect harmonic distortion, identifies voltage sags/swells within 1/2 cycle (8-10ms), and tracks power factor variations. Machine learning models trained on millions of power quality events help distinguish between normal fluctuations and dangerous anomalies.",
+      technicalDetails: [
+        "Sub-cycle anomaly detection",
+        "Harmonic analysis up to 50th order",
+        "AI-powered pattern recognition",
+        "Predictive failure detection"
       ],
-      image: "/images/cloud-connection.jpg"
+      
     },
     {
-      number: 3,
-      icon: Activity,
-      title: "Real-time Monitoring Begins",
-      description: "Start monitoring voltage fluctuations, power quality, and receive instant alerts for any anomalies.",
-      features: [
-        "240 samples per second",
-        "Millisecond response time",
-        "Continuous 24/7 monitoring"
+      number: "03",
+      title: "Intelligent Alert System",
+      description: "When the system detects voltage outside safe operating ranges (typically ±10% of nominal), it triggers multi-channel alerts. The severity classification system ranks events from minor fluctuations to critical emergencies. For voltage spikes exceeding 130% of nominal, you receive instant push notifications, SMS, and email alerts. The system also logs near-miss events that didn't trigger alerts but indicate degrading power quality.",
+      technicalDetails: [
+        "Customizable threshold settings",
+        "Multi-tier severity classification",
+        "SMS, email, and app notifications",
+        "Integration with smart home systems"
       ],
-      image: "/images/realtime-monitoring.jpg"
-    }
+      
+    },
+    {
+      number: "04",
+      title: "Data Analytics & Reporting",
+      description: "All voltage data is securely stored in the cloud with end-to-end encryption. The dashboard provides interactive visualizations including real-time waveforms, trending charts, and power quality scores. Historical analysis reveals patterns like daily voltage variations, weekend vs. weekday differences, and seasonal trends. Automated reports identify the root causes of power issues—whether from utility supply problems, internal equipment, or neighborhood load patterns.",
+      technicalDetails: [
+        "Unlimited cloud storage",
+        "Exportable CSV/PDF reports",
+        "Customizable dashboards",
+        "Utility-grade power quality metrics"
+      ],
+      
+    },
   ];
 
-  const protectionFeatures = [
-    {
-      icon: AlertTriangle,
-      title: "Spike Detection",
-      description: "Instantly detects voltage spikes and surges that can damage sensitive electronics.",
-      data: "Detects spikes in <2ms"
-    },
-    {
-      icon: Battery,
-      title: "Brownout Protection",
-      description: "Monitors for low voltage conditions that can cause equipment malfunction and data loss.",
-      data: "Alerts at <90% nominal voltage"
-    },
-    {
-      icon: Thermometer,
-      title: "Overload Monitoring",
-      description: "Tracks circuit load to prevent overheating and potential fire hazards.",
-      data: "Monitors temperature rise"
-    },
-    {
-      icon: HardDrive,
-      title: "Equipment Protection",
-      description: "Safeguards computers, servers, appliances, and industrial equipment from power-related damage.",
-      data: "Protects 200+ device types"
-    }
-  ];
-
-  const dashboardFeatures = [
-    {
-      icon: BarChart3,
-      title: "Analytics Dashboard",
-      description: "Comprehensive dashboard showing voltage trends, power quality metrics, and historical data."
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile App",
-      description: "Full-featured mobile app for monitoring and alerts on the go with push notifications."
-    },
-    {
-      icon: Bell,
-      title: "Smart Alerts",
-      description: "Customizable alert thresholds via email, SMS, and push notifications for immediate action."
-    },
-    {
-      icon: Cloud,
-      title: "Cloud Storage",
-      description: "Secure cloud storage for all monitoring data with unlimited history and export capabilities."
-    }
-  ];
-
-  const useCases = [
-    {
-      icon: Home,
-      title: "Residential Protection",
-      description: "Protect home electronics, appliances, and smart home systems from power damage.",
-      devices: ["TVs", "Computers", "Appliances", "HVAC Systems"]
-    },
-    {
-      icon: Building,
-      title: "Commercial",
-      description: "Safeguard business equipment, servers, and point-of-sale systems to prevent downtime.",
-      devices: ["Servers", "POS Systems", "Network Equipment", "Security Systems"]
-    },
-    {
-      icon: Factory,
-      title: "Industrial",
-      description: "Monitor critical machinery, production lines, and industrial equipment for power quality issues.",
-      devices: ["CNC Machines", "Robotics", "Control Systems", "Manufacturing Equipment"]
-    },
-    {
-      icon: Server,
-      title: "Data Centers",
-      description: "Ensure uninterrupted operation of servers and network infrastructure with precise monitoring.",
-      devices: ["Server Racks", "UPS Systems", "Cooling Systems", "Network Gear"]
-    }
-  ];
-
-  const technicalSpecs = [
-    { spec: "Sampling Rate", value: "240 samples/second", detail: "For precise waveform capture" },
-    { spec: "Response Time", value: "< 2 milliseconds", detail: "Instant spike detection" },
-    { spec: "Voltage Range", value: "80V - 300V AC", detail: "Covers all standard voltages" },
-    { spec: "Accuracy", value: "±0.5%", detail: "Laboratory-grade precision" },
-    { spec: "Connectivity", value: "WiFi 6 / Ethernet", detail: "Dual connectivity options" },
-    { spec: "Data Retention", value: "Unlimited cloud storage", detail: "Full historical data" }
+  const techSpecs = [
+    { label: "Sampling Rate", value: "10,000 Hz" },
+    { label: "Response Time", value: "< 10ms" },
+    { label: "Voltage Range", value: "85-280V AC" },
+    { label: "Accuracy", value: "±0.5%" },
+    { label: "Data Storage", value: "Unlimited" },
+    { label: "Update Frequency", value: "100ms" },
   ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode ? 'bg-gray-950' : 'bg-gray-50'
+    <section className={`relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden ${
+      isDarkMode ? 'bg-[#0f172a]' : 'bg-gray-50'
     }`}>
-      
-      {/* Hero Section */}
-      <section className={`relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden ${
-        isDarkMode ? 'bg-gradient-to-br from-blue-900/20 to-indigo-900/20' : 'bg-gradient-to-br from-blue-50 to-indigo-50'
-      }`}>
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${isDarkMode ? '#3b82f6' : '#94a3b8'} 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
+      {/* Background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
+      </div>
 
-        <div className="relative max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-            <Zap className="h-4 w-4" />
-            <span className="text-sm font-medium">How VoltWatch Works</span>
-          </div>
-
-          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${
-            isDarkMode ? 'text-white' : 'text-gray-900'
-          }`}>
-            Complete Power Protection
-            <span className="block bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              Made Simple
+      <div className="relative max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20">
+            <span className={`text-sm font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}>
+              Advanced Technology
             </span>
-          </h1>
+          </div>
           
-          <p className={`text-xl max-w-3xl mx-auto mb-10 ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          }`}>
-            VoltWatch provides professional-grade voltage monitoring and protection in an easy-to-use package. 
-            Here&apos;s exactly how our system protects your valuable equipment.
+          <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-[#020617]'}`}>
+            How VoltWatch Works
+          </h2>
+          
+          <p className={`text-lg md:text-xl max-w-3xl mx-auto leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-[#475569]'}`}>
+            VoltWatch combines industrial-grade hardware with cutting-edge AI to provide comprehensive power quality monitoring. Here&apos;s the complete technical process from installation to insights.
           </p>
         </div>
-      </section>
 
-      {/* 3-Step Process */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              Simple 3-Step Setup
-            </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              Get complete voltage protection in under 15 minutes
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {monitoringSteps.map((step) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.number} className="relative">
-                  {/* Step Number */}
-                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full font-bold text-xl ${
-                    isDarkMode 
-                      ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white' 
-                      : 'bg-gradient-to-br from-blue-600 to-indigo-700 text-white'
-                  } shadow-lg`}>
-                    {step.number}
-                  </div>
-                  
-                  {/* Card */}
-                  <div className={`pt-8 p-8 rounded-2xl shadow-xl border ${
-                    isDarkMode 
-                      ? 'bg-gray-900 border-gray-800' 
-                      : 'bg-white border-gray-200'
-                  }`}>
-                    <div className={`flex items-center justify-center w-16 h-16 rounded-xl mx-auto mb-6 ${
-                      isDarkMode 
-                        ? 'bg-blue-900/30' 
-                        : 'bg-blue-100'
-                    }`}>
-                      <Icon className={`h-8 w-8 ${
-                        isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                      }`} />
-                    </div>
-                    
-                    <h3 className={`text-xl font-semibold mb-4 text-center ${
-                      isDarkMode ? 'text-white' : 'text-gray-900'
-                    }`}>
-                      {step.title}
-                    </h3>
-                    
-                    <p className={`mb-6 text-center ${
-                      isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                    }`}>
-                      {step.description}
-                    </p>
-                    
-                    <ul className="space-y-3">
-                      {step.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <CheckCircle className={`h-5 w-5 mt-0.5 flex-shrink-0 ${
-                            isDarkMode ? 'text-green-400' : 'text-green-600'
-                          }`} />
-                          <span className={`text-sm ${
-                            isDarkMode ? 'text-gray-300' : 'text-gray-700'
-                          }`}>
-                            {feature}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+        {/* Technical Specs Overview */}
+        <div className={`mb-16 p-8 rounded-2xl border ${
+          isDarkMode
+            ? 'bg-gray-900/50 border-gray-800'
+            : 'bg-white border-gray-200'
+        }`}>
+          <h3 className={`text-2xl font-bold mb-6 text-center ${isDarkMode ? 'text-white' : 'text-[#020617]'}`}>
+            Technical Specifications
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {techSpecs.map((spec, index) => (
+              <div key={index} className="text-center">
+                <div className={`text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent`}>
+                  {spec.value}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Protection Features */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
-        isDarkMode ? 'bg-gray-900/50' : 'bg-gray-100'
-      }`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              What We Protect You From
-            </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              Comprehensive protection against all common power quality issues
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {protectionFeatures.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <div key={index} className={`group p-6 rounded-2xl border transition-all duration-300 hover:scale-105 ${
-                  isDarkMode 
-                    ? 'bg-gray-800/50 border-gray-700 hover:border-blue-500' 
-                    : 'bg-white border-gray-200 hover:border-blue-400'
-                }`}>
-                  <div className={`flex items-center justify-center w-14 h-14 rounded-xl mb-4 ${
-                    isDarkMode 
-                      ? 'bg-gradient-to-br from-blue-900/30 to-indigo-900/30' 
-                      : 'bg-gradient-to-br from-blue-100 to-indigo-100'
-                  }`}>
-                    <Icon className={`h-7 w-7 ${
-                      isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                    }`} />
-                  </div>
-                  
-                  <h3 className={`text-lg font-semibold mb-3 ${
-                    isDarkMode ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {feature.title}
-                  </h3>
-                  
-                  <p className={`text-sm mb-4 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {feature.description}
-                  </p>
-                  
-                  <div className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
-                    isDarkMode 
-                      ? 'bg-blue-900/30 text-blue-300' 
-                      : 'bg-blue-100 text-blue-700'
-                  }`}>
-                    {feature.data}
-                  </div>
+                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {spec.label}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Dashboard & Analytics */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-                isDarkMode ? 'text-white' : 'text-gray-900'
-              }`}>
-                Powerful Dashboard & Analytics
-              </h2>
-              
-              <p className={`text-lg mb-8 ${
-                isDarkMode ? 'text-gray-400' : 'text-gray-600'
-              }`}>
-                Monitor your power quality from anywhere with our intuitive dashboard and mobile app. 
-                Get real-time insights, historical data, and instant alerts.
-              </p>
-              
-              <div className="space-y-6">
-                {dashboardFeatures.map((feature, index) => {
-                  const Icon = feature.icon;
-                  return (
-                    <div key={index} className="flex items-start gap-4">
-                      <div className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl ${
-                        isDarkMode 
-                          ? 'bg-blue-900/30' 
-                          : 'bg-blue-100'
-                      }`}>
-                        <Icon className={`h-6 w-6 ${
-                          isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                        }`} />
-                      </div>
-                      <div>
-                        <h3 className={`text-lg font-semibold mb-2 ${
-                          isDarkMode ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          {feature.title}
-                        </h3>
-                        <p className={`${
-                          isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                        }`}>
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            
-            {/* Dashboard Mockup */}
-            <div className={`relative p-8 rounded-2xl shadow-2xl ${
-              isDarkMode ? 'bg-gray-800' : 'bg-white'
-            }`}>
-              <div className="flex items-center gap-2 mb-6">
-                <div className="flex gap-1">
-                  <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                </div>
-                <div className={`h-4 rounded ${
-                  isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
-                } flex-1`}></div>
-              </div>
-              
-              {/* Mock dashboard content */}
-              <div className="space-y-4">
-                <div className={`h-6 rounded ${
-                  isDarkMode ? 'bg-gray-700' : 'bg-gray-200'
-                }`}></div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className={`h-32 rounded-lg ${
-                    isDarkMode ? 'bg-blue-900/30 border border-blue-800/50' : 'bg-blue-50'
-                  }`}></div>
-                  <div className={`h-32 rounded-lg ${
-                    isDarkMode ? 'bg-green-900/30 border border-green-800/50' : 'bg-green-50'
-                  }`}></div>
-                </div>
-                <div className={`h-40 rounded-lg ${
-                  isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
-                }`}></div>
-              </div>
-              
-              {/* Floating stats */}
-              <div className={`absolute -bottom-4 -right-4 p-4 rounded-xl shadow-lg ${
-                isDarkMode ? 'bg-blue-900' : 'bg-blue-600'
-              } text-white`}>
-                <div className="text-center">
-                  <div className="text-2xl font-bold">229V</div>
-                  <div className="text-xs opacity-80">Current Voltage</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
-        isDarkMode ? 'bg-gray-900/50' : 'bg-gray-100'
-      }`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              Who Uses VoltWatch
-            </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              Protecting valuable equipment across homes, businesses, and industries
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {useCases.map((useCase, index) => {
-              const Icon = useCase.icon;
-              return (
-                <div key={index} className={`p-6 rounded-2xl ${
-                  isDarkMode 
-                    ? 'bg-gray-800/50 hover:bg-gray-800' 
-                    : 'bg-white hover:bg-gray-50'
-                } transition-colors duration-300`}>
-                  <div className={`flex items-center justify-center w-14 h-14 rounded-xl mb-6 ${
-                    isDarkMode 
-                      ? 'bg-gradient-to-br from-blue-900/30 to-indigo-900/30' 
-                      : 'bg-gradient-to-br from-blue-100 to-indigo-100'
-                  }`}>
-                    <Icon className={`h-7 w-7 ${
-                      isDarkMode ? 'text-blue-400' : 'text-blue-600'
-                    }`} />
-                  </div>
-                  
-                  <h3 className={`text-lg font-semibold mb-4 ${
-                    isDarkMode ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {useCase.title}
-                  </h3>
-                  
-                  <p className={`text-sm mb-6 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {useCase.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {useCase.devices.map((device, i) => (
-                      <span key={i} className={`text-xs px-3 py-1 rounded-full ${
-                        isDarkMode 
-                          ? 'bg-gray-700 text-gray-300' 
-                          : 'bg-gray-200 text-gray-700'
-                      }`}>
-                        {device}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Specifications */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-              isDarkMode ? 'text-white' : 'text-gray-900'
-            }`}>
-              Technical Specifications
-            </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              Professional-grade technology for reliable protection
-            </p>
-          </div>
-
-          <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          }`}>
-            {technicalSpecs.map((item, index) => (
-              <div key={index} className={`p-6 rounded-xl border ${
-                isDarkMode 
-                  ? 'bg-gray-800/50 border-gray-700' 
-                  : 'bg-white border-gray-200'
-              }`}>
-                <div className="text-sm opacity-70 mb-2">{item.spec}</div>
-                <div className={`text-xl font-semibold mb-2 ${
-                  isDarkMode ? 'text-white' : 'text-gray-900'
-                }`}>
-                  {item.value}
-                </div>
-                <div className="text-sm opacity-70">{item.detail}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Final CTA */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 ${
-        isDarkMode 
-          ? 'bg-gradient-to-r from-blue-900/50 to-indigo-900/50' 
-          : 'bg-gradient-to-r from-blue-50 to-indigo-50'
-      }`}>
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-            <Shield className="h-4 w-4" />
-            <span className="text-sm font-medium">Ready to Protect</span>
-          </div>
-
-          <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
-            isDarkMode ? 'text-white' : 'text-gray-900'
-          }`}>
-            Start Protecting Your Equipment Today
-          </h2>
-          
-          <p className={`text-lg mb-10 max-w-2xl mx-auto ${
-            isDarkMode ? 'text-gray-300' : 'text-gray-700'
-          }`}>
-            Join thousands of professionals who trust VoltWatch to protect their valuable equipment from power damage.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/get-started">
-              <button className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center gap-2">
-                Get Started Free
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
-            
-            <Link href="/pricing">
-              <button className={`px-8 py-4 font-semibold rounded-xl border transition-all duration-300 hover:scale-105 ${
+        {/* Steps */}
+        <div className="space-y-12">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className={`group relative p-8 rounded-2xl transition-all duration-300 border ${
                 isDarkMode
-                  ? 'border-gray-700 text-gray-300 hover:bg-gray-800/50 hover:border-gray-600'
-                  : 'border-gray-300 text-gray-700 hover:bg-white hover:border-gray-400'
-              }`}>
-                View Pricing
-              </button>
-            </Link>
-          </div>
-          
-          <p className={`mt-8 text-sm ${
-            isDarkMode ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            No credit card required • 30-day free trial • Cancel anytime
-          </p>
+                  ? 'bg-gray-900/50 border-gray-800 hover:bg-gray-900/70 hover:border-blue-500/50'
+                  : 'bg-white border-gray-200 hover:shadow-xl hover:border-blue-300'
+              }`}
+            >
+              <div className="flex flex-col lg:flex-row gap-8">
+                {/* Left: Number & Icon */}
+                <div className="flex-shrink-0">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex flex-col items-center justify-center shadow-lg">
+                    <span className="text-white font-bold text-2xl">{step.number}</span>
+                  </div>
+                  
+                </div>
+
+                {/* Right: Content */}
+                <div className="flex-1">
+                  <h3 className={`text-3xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-[#020617]'}`}>
+                    {step.title}
+                  </h3>
+                  
+                  <p className={`text-lg leading-relaxed mb-6 ${isDarkMode ? 'text-gray-300' : 'text-[#475569]'}`}>
+                    {step.description}
+                  </p>
+
+                  {/* Technical Details */}
+                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-3 p-6 rounded-xl ${
+                    isDarkMode ? 'bg-gray-800/50' : 'bg-gray-50'
+                  }`}>
+                    {step.technicalDetails.map((detail, idx) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        <svg className={`w-5 h-5 flex-shrink-0 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {detail}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Hover accent */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            </div>
+          ))}
         </div>
-      </section>
-    </div>
+
+        {/* Bottom Info */}
+        <div className={`mt-16 p-8 rounded-2xl border ${
+          isDarkMode
+            ? 'bg-gradient-to-br from-gray-900/80 to-gray-800/80 border-gray-700'
+            : 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200'
+        }`}>
+          <div className="max-w-3xl mx-auto text-center">
+            <h3 className={`text-2xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-[#020617]'}`}>
+              Why Voltage Monitoring Matters
+            </h3>
+            <p className={`text-lg leading-relaxed mb-6 ${isDarkMode ? 'text-gray-300' : 'text-[#475569]'}`}>
+              Most electrical damage happens silently. Voltage spikes from lightning, grid switching, or faulty equipment can destroy sensitive electronics in milliseconds. Prolonged undervoltage causes motors and compressors to overheat and fail prematurely. VoltWatch gives you the visibility and advance warning needed to prevent thousands of dollars in equipment damage.
+            </p>
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${
+              isDarkMode ? 'bg-blue-500/10 text-blue-300' : 'bg-blue-100 text-blue-700'
+            }`}>
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+              <span className="text-sm font-medium">Concept in Development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default HowItWorksPage;
+export default HowItWorksSection;
